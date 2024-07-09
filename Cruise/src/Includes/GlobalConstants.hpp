@@ -25,7 +25,7 @@ const int ILARGE = 9999;					// Large Integer number
 /* Sizing of arrays */
 const int CHARN = 40;						// Character numbers in variable names
 const int CHARL = 150;						// Character numbers in a line
-// Verify the array sizes. If too small, dynamic memory allocations may fail!
+/* Verify the array sizes. If too small, dynamic memory allocations may fail! */
 const int NROUND3 = 40;						// Size of 'round3' module-variable array
 const int NCRUISE = 160;					// Size of 'cruise' module-variable array
 const int NTARGET = 20;						// Size of 'terget' module-variable array

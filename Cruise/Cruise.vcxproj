@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\GlobalConstants.hpp" />
+    <ClInclude Include="src\Includes\GlobalConstants.hpp" />
+    <ClInclude Include="src\Includes\Utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Matrix.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
