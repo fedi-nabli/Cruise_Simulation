@@ -252,3 +252,95 @@ int sign(double variable);
 
 // Returns the angle between two 3x1 vectors
 double angle(Matrix VEC1, Matrix VEC2);
+
+
+// <summary>
+// Table llok-up and interpolation fuynction declarations
+// //////////////////////////////////////////////////////
+// 
+// class 'Table'
+//	Stores Table data
+// 
+// Created on 09/07/2024 by Fedi Nabli
+// </summary>
+class Table
+{
+public:
+	double* var1_values = nullptr; // Values of variable 1
+	double* var2_values = nullptr; // Values of variable 2
+	double* var3_values = nullptr; // Values of variable 3
+	double* data = nullptr; // Table data values packaged in one array
+
+public:
+	Table() {};
+
+	virtual ~Table()
+	{
+		delete var1_values;
+		delete var2_values;
+		delete var3_values;
+		delete data;
+	}
+
+	// Getting dimension of table
+	int get_dim() { return m_Dim; }
+
+	// Getting name of table
+	std::string get_name() { return m_Name; }
+
+	// Getting 1. Independant variable dimension
+	int get_var1_dim() { return m_Var1_dim; }
+
+	// Getting 2. Independant variable dimension
+	int get_var2_dim() { return m_Var2_dim; }
+
+	// Getting 3. Independant variable dimension
+	int get_var3_dim() { return m_Var3_dim; }
+
+	// Setting dimension of table
+	void set_dim(int table_dim) { m_Dim = table_dim; }
+
+	// Setting the name of the table
+	void set_name(std::string table_name) { m_Name = table_name; }
+
+	// Setting 1. Independant variable dimension
+	void set_var1_dim(int size) { m_Var1_dim = size; }
+
+	// Setting 2. Independant variable dimension
+	void set_var2_dim(int size) { m_Var2_dim = size; }
+
+	// Setting 3. Independant variable dimension
+	void set_var3_dim(int size) { m_Var3_dim = size; }
+
+	// Setting 1. Independant variable values
+	void set_var1_value(int offset, double value)
+	{
+		var1_values[offset] = value;
+	}
+
+	// Setting 2. Independant variable values
+	void set_var2_value(int offset, double value)
+	{
+		var2_values[offset] = value;
+	}
+
+	// Setting 3. Independant variable values
+	void set_var3_value(int offset, double value)
+	{
+		var3_values[offset] = value;
+	}
+
+	// Setting tabular data values
+	void set_data(int offset, double value)
+	{
+		data[offset] = value;
+	}
+
+private:
+	int m_Dim = 0; // Table dimension (1, 2 or 3)
+	int m_Var1_dim = 0; // Variable 1 dimension
+	int m_Var2_dim = 0; // Variable 2 dimension
+	int m_Var3_dim = 0; // Variable 3 dimension
+
+	std::string m_Name = ""; // Table name
+};
