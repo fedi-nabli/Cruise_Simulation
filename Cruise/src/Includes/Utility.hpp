@@ -255,7 +255,7 @@ double angle(Matrix VEC1, Matrix VEC2);
 
 
 // <summary>
-// Table llok-up and interpolation fuynction declarations
+// Table look-up and interpolation fuynction declarations
 // //////////////////////////////////////////////////////
 // 
 // class 'Table'
@@ -344,3 +344,137 @@ private:
 
 	std::string m_Name = ""; // Table name
 };
+
+
+// <summary>
+// class 'Datadeck'
+//	Provides the 'Datadeck' class declaration for table look-ups
+// 
+// Created on 09/07/2024 by Fedi Nabli
+// </summary>
+class Datadeck
+{
+public:
+	Datadeck() {}
+	virtual ~Datadeck()
+	{
+		delete[] m_TablePtr;
+	}
+
+	// Allocating memory for m_TablePtr array
+	void alloc_mem()
+	{
+		m_TablePtr = new Table * [m_Capacity];
+	}
+
+	// Setting table deck title
+	void set_title(std::string deck_title)
+	{
+		m_Title = deck_title;
+	}
+
+	// Getting table deck title
+	std::string get_title()
+	{
+		return m_Title;
+	}
+
+	// Setting total number of tables
+	void set_capacity(int table_numbers)
+	{
+		m_Capacity = table_numbers;
+	}
+
+	// Getting table number of tables
+	int get_cpacity()
+	{
+		return m_Capacity;
+	}
+
+	// Setting table counter
+	void set_counter(int count)
+	{
+		m_TblCounter = count;
+	}
+
+	// Getting table counter
+	int get_counter()
+	{
+		return m_TblCounter;
+	}
+
+	// Adding a table pointer to the table list
+	void add_table(Table& pt)
+	{
+		if (m_TblCounter < m_Capacity)
+		{
+			m_TablePtr[m_TblCounter] = &pt;
+		}
+	}
+
+	// Overloaded operator [] returns a 'Table' pointer
+	Table* get_tbl(int slot)
+	{
+		return m_TablePtr[slot];
+	}
+
+public:
+	// Single independant variable look-up
+	// Constant extrapolation at the upper end, slope extrapolation at the lower end
+	double look_up(std::string name, double value1);
+
+	// Two independant variables look-up
+	// Constant extrapolation at the upper end, slope extrapolation at the lower end
+	double look_up(std::string name, double value1, double value2);
+
+	// Three independant variables look-up
+	// Constant extrapolation at the upper end, slope extrapolation at the lower end
+	double look_up(std::string name, double value1, double value2, double value3);
+
+	// Table index finder
+	// This is a binary search method it is O(logN)
+	// * Returns array locator of the discrete_variable just below variable
+	// * Keeps max or min array locator if variable is outside those max or min
+	int find_index(int max, double value, double* list);
+
+	// Linear one-dimensional interpolation
+	// Constant extrapolation beyond max values of X1
+	// Slope extrapolation beyond min values of X1
+	double interpolate(int ind, int ind2, int slot, double val);
+
+	// Linear two-dimensional interpolation
+	// Constant extrapolation beyond max values of X1 and X2
+	// Slope extrapolation beyond min values of X1 and X2
+	double interpolate(int ind10, int ind11, int ind20, int ind21, int slot, double value1, double value2);
+
+	// Linear three-dimensional interpolation
+	// Constant extrapolation beyond max values of X1, X2 and X3
+	// Slope extrapolation beyond min values of X1, X2 and X3
+	double interpolate(int ind10, int ind12, int ind20, int ind21, int ind30,
+							int ind31, int slot, double value1, double value2, double value3);
+
+private:
+	std::string m_Title = ""; // Title od data deck
+	int m_Capacity = 0; // Total number of table
+	int m_TblCounter = 0; // Table counter
+	Table** m_TablePtr = nullptr; // m_TablePtr is a pointer to a pointer array of type 'Table'
+};
+
+//////////////////////////////////////////////////////////
+////////////////// Integration functions /////////////////
+//////////////////////////////////////////////////////////
+
+// Integration of scalar state variable
+// Modified midpoint method
+double integrate(const double& dydx_new, const double& dydx, const double& y, const double& int_step);
+
+// Integration of Matrix MAT(r, c)
+Matrix integrate(Matrix& DYDX_NEW, Matrix& DYDX, Matrix& Y, const double int_step);
+
+//////////////////////////////////////////////////////////
+/////////////// US Standard Atmosphere 1976 //////////////
+//////////////////////////////////////////////////////////
+
+// Calculates the atmospheric properties density pressure and temperature
+// up to 85km
+void atmosphere76(double& rho, double& press, double& tempk, const couble balt);
